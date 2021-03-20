@@ -17,12 +17,10 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
-import java.util.*
 
 
 class LoginFragment : Fragment() {
@@ -74,10 +72,15 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.cadastrarFragment)
         }
 
+        val edtEmailLogin = view.findViewById<TextInputEditText>(R.id.edtEmailLogin)
+        val edtSenhaLogin = view.findViewById<TextInputEditText>(R.id.edtSenhaLogin)
+
         val btnLogar = view.findViewById<Button>(R.id.btnLogar)
         btnLogar.setOnClickListener {
-            val email = view.findViewById<TextInputEditText>(R.id.edtEmailLogin).text.toString()
-            val senha = view.findViewById<TextInputEditText>(R.id.edtSenhaLogin).text.toString()
+
+            var email = edtEmailLogin.text.toString()
+            var senha = edtSenhaLogin.text.toString()
+
             if(!email.isNullOrBlank() && !senha.isNullOrBlank()) {
                 viewModel.logar(email, senha)
             }
@@ -95,7 +98,14 @@ class LoginFragment : Fragment() {
             override fun onSuccess(loginResult: LoginResult?) {
                 if (loginResult != null) {
                     viewModel.logarFacebook(loginResult.accessToken)
+
                     loginButton.visibility = LoginButton.GONE
+                    btnCadastrarLogin.isEnabled = false
+                    btnLogar.isEnabled = false
+                    edtEmailLogin.isEnabled = false
+                    edtSenhaLogin.isEnabled = false
+
+                    makeToast("Entrando.....")
                 }
             }
 
@@ -107,13 +117,6 @@ class LoginFragment : Fragment() {
                 makeToast("${exception.message}")
             }
         })
-
-        loginButton.setOnClickListener {
-            LoginManager.getInstance().logInWithReadPermissions(
-                this,
-                 listOf("public_profile", "user_friends")
-            )
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

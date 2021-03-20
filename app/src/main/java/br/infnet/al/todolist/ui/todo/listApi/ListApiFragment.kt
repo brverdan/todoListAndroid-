@@ -35,7 +35,6 @@ class ListApiFragment : Fragment() {
         val txtListaTarefaApiVazia = view.findViewById<TextView>(R.id.txtListaTarefaApiVazia)
         viewModel.tarefaApi.observe(viewLifecycleOwner, Observer {
             if (!it.tarefas.isNullOrEmpty()) {
-                txtListaTarefaApiVazia.visibility = TextView.VISIBLE
                 listTarefaApi.adapter = ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_list_item_1 ,

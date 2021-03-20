@@ -29,12 +29,7 @@ class RecyclerViewTodoList (
 
     override fun onBindViewHolder(holder: TodosViewHolder, position: Int) {
         val todo = todos[position]
-        if(todo.titulo!!.length > 15) {
-            holder.txtTituloTodo.text = todo.titulo!!.slice(IntRange(0,15)) + "..."
-        }
-        else {
-            holder.txtTituloTodo.text = todo.titulo
-        }
+        holder.txtTituloTodo.text = todo.titulo
         holder.checkBoxCompletada.isChecked = todo.completada
 
         holder.itemView.setOnClickListener {

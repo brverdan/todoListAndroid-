@@ -77,7 +77,12 @@ class CadastroCompraFragment : Fragment() {
             val nomeItem = view.findViewById<TextInputEditText>(R.id.edtNomeItemCadastrarCompra).text.toString()
             val itemComprado = view.findViewById<CheckBox>(R.id.checkBoxItemCompradoCadastrarCompra).isChecked
 
-            viewModel.SalvarItem(nomeItem, quantidade.text.toString().toInt(), itemComprado)
+            if(!nomeItem.isNullOrBlank() && quantidade.text.toString().toInt() != 0) {
+                viewModel.SalvarItem(nomeItem, quantidade.text.toString().toInt(), itemComprado)
+            }
+            else {
+                makeToast("Nome deve ser preenchido ou a quantidade está igual a 0.")
+            }
         }
     }
 
@@ -89,5 +94,9 @@ class CadastroCompraFragment : Fragment() {
         edtNomeItemCadastrarCompra.setText(item.nomeItem)
         txtQtdItemCadastrarCompra.text = item.quantidade.toString()
         checkBoxItemCompradoCadastrarCompra.isChecked = item.itemComprado
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
     }
 }

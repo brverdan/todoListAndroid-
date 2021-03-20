@@ -39,7 +39,7 @@ class CadastroTodoFragment : Fragment() {
             })
             it.status.observe(viewLifecycleOwner, Observer {
                 if (it) {
-                    findNavController().popBackStack()
+                    findNavController().popBackStack(R.id.listTodoFragment, false)
                 }
             })
 
@@ -61,7 +61,12 @@ class CadastroTodoFragment : Fragment() {
             val titulo = view.findViewById<TextInputEditText>(R.id.edtTituloCadastrarTodo).text.toString()
             val completada = view.findViewById<CheckBox>(R.id.checkBoxCompletadaCadastroTodo).isChecked
 
-            viewModel.SalvarTodo(descricao, titulo, completada)
+            if(!descricao.isNullOrBlank() && !titulo.isNullOrBlank()) {
+                viewModel.SalvarTodo(descricao, titulo, completada)
+            }
+            else {
+                makeToast("Os campos de descrição e título são obrigatórios.")
+            }
         }
     }
 
@@ -90,5 +95,9 @@ class CadastroTodoFragment : Fragment() {
         edtDescricaoCadastrarTodo.setText(todo.descricao)
         edtTituloCadastrarTodo.setText(todo.titulo)
         edtCompletadaCadastrarTodo.isChecked = todo.completada
+    }
+
+    private fun makeToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
     }
 }
