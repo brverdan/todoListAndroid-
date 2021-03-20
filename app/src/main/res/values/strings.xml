@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Todo List</string>
+    <string name="facebook_app_id">890823354983934</string> <string name="fb_login_protocol_scheme">fb890823354983934</string>
+</resources>

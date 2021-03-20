@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="br.infnet.al.todolist.ui.usuario.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_cadastrarFragment"
+            app:destination="@id/cadastrarFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_listTodoFragment"
+            app:destination="@id/listTodoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cadastrarFragment"
+        android:name="br.infnet.al.todolist.ui.usuario.cadastro.CadastrarFragment"
+        android:label="cadastrar_fragment"
+        tools:layout="@layout/cadastrar_fragment" />
+    <fragment
+        android:id="@+id/listTodoFragment"
+        android:name="br.infnet.al.todolist.ui.todo.list.ListTodoFragment"
+        android:label="list_todo_fragment"
+        tools:layout="@layout/list_todo_fragment" >
+        <action
+            android:id="@+id/action_listTodoFragment_to_cadastroTodoFragment"
+            app:destination="@id/cadastroTodoFragment" />
+        <action
+            android:id="@+id/action_listTodoFragment_to_detalhesTodoFragment"
+            app:destination="@id/detalhesTodoFragment" />
+        <action
+            android:id="@+id/action_listTodoFragment_to_listApiFragment"
+            app:destination="@id/listApiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listComprasFragment"
+        android:name="br.infnet.al.todolist.ui.compras.list.ListComprasFragment"
+        android:label="list_compras_fragment"
+        tools:layout="@layout/list_compras_fragment" >
+        <action
+            android:id="@+id/action_listComprasFragment_to_cadastroCompraFragment"
+            app:destination="@id/cadastroCompraFragment" />
+        <action
+            android:id="@+id/action_listComprasFragment_to_detalhesItemCompraFragment"
+            app:destination="@id/detalhesItemCompraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/perfilUsuarioFragment"
+        android:name="br.infnet.al.todolist.ui.usuario.perfil.PerfilUsuarioFragment"
+        android:label="perfil_usuario_fragment"
+        tools:layout="@layout/perfil_usuario_fragment" />
+    <fragment
+        android:id="@+id/cadastroTodoFragment"
+        android:name="br.infnet.al.todolist.ui.todo.cadastro.CadastroTodoFragment"
+        android:label="cadastro_todo_fragment"
+        tools:layout="@layout/cadastro_todo_fragment" />
+    <fragment
+        android:id="@+id/detalhesTodoFragment"
+        android:name="br.infnet.al.todolist.ui.todo.detalhes.DetalhesTodoFragment"
+        android:label="detalhes_todo_fragment"
+        tools:layout="@layout/detalhes_todo_fragment" />
+    <fragment
+        android:id="@+id/cadastroCompraFragment"
+        android:name="br.infnet.al.todolist.ui.compras.cadastro.CadastroCompraFragment"
+        android:label="cadastro_compra_fragment"
+        tools:layout="@layout/cadastro_compra_fragment" />
+    <fragment
+        android:id="@+id/detalhesItemCompraFragment"
+        android:name="br.infnet.al.todolist.ui.compras.detalhes.DetalhesItemCompraFragment"
+        android:label="detalhes_item_compra_fragment"
+        tools:layout="@layout/detalhes_item_compra_fragment" />
+    <fragment
+        android:id="@+id/listApiFragment"
+        android:name="br.infnet.al.todolist.ui.todo.listApi.ListApiFragment"
+        android:label="list_api_fragment"
+        tools:layout="@layout/list_api_fragment" />
+</navigation>

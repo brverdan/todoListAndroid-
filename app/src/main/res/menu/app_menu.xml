@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listTodoFragment"
+        android:icon="@android:drawable/checkbox_on_background"
+        android:title="Lista de tarefas" />
+    <item
+        android:id="@+id/listComprasFragment"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="Lista de compras" />
+    <item
+        android:id="@+id/perfilUsuarioFragment"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Perfil" />
+</menu>
