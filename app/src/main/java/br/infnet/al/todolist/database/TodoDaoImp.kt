@@ -14,7 +14,7 @@ class TodoDaoImp: TodoDao {
     private val collection = FirebaseFirestore.getInstance().collection("todos")
 
     override fun insert(todo: Todo): Task<Void> {
-        todo.documentId = Random.nextLong().toString()
+        todo.documentId = Random.nextLong(0, Long.MAX_VALUE).toString()
         todo.userId = firebaseAuth.currentUser.uid
         return collection.document(todo.documentId!!).set(todo)
     }
