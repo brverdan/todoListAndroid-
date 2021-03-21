@@ -35,27 +35,6 @@ class EdicaoPerfilViewModel(application: Application) : AndroidViewModel(applica
         _status.value = false
         _message.value = null
 
-        UsuarioFirebaseDao
-            .consultarUsuario()
-            .addOnSuccessListener {
-                val usuario = it.toObject(Usuario::class.java)
-                usuario!!.firebaseAuth = UsuarioFirebaseDao.firebaseAuth.currentUser
-                _usuario.value = usuario!!
-                if(UsuarioFirebaseDao.firebaseAuth.currentUser.providerData[1].providerId != FacebookAuthProvider.PROVIDER_ID) {
-                    val file = File(app.cacheDir, "userTemp.jpeg")
-                    UsuarioFirebaseDao
-                        .consultarImagem(usuario.uid!!, file)
-                        .addOnSuccessListener {
-                            _imagemPerfil.value = file.toUri()
-                        }
-                        .addOnFailureListener {
-                            Log.i("UploadImagem", "${it.message}")
-                        }
-                }
-                else {
-                    _imagemPerfil.value = UsuarioFirebaseDao.firebaseAuth.currentUser.providerData[1].photoUrl
-                }
-            }
     }
 
     fun editarPerfil(nome: String, senha: String) {

@@ -34,11 +34,6 @@ class EdicaoPerfilFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, edicaoPerfilViewModelFactory).get(EdicaoPerfilViewModel::class.java)
 
-        viewModel.usuario.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                preencherInformacoes(it)
-            }
-        })
         viewModel.status.observe(viewLifecycleOwner, Observer {
             if (it) {
                findNavController().popBackStack()
@@ -92,12 +87,6 @@ class EdicaoPerfilFragment : Fragment() {
         //else {
         //   makeToast("Nenhum recurso disponível.")
         //}
-    }
-
-    private fun preencherInformacoes(usuario: Usuario) {
-        var nome = requireView().findViewById<TextInputEditText>(R.id.edtInputNomeEditarPerfil)
-
-        nome.setText(usuario.nome)
     }
 
     private fun makeToast(msg: String) {

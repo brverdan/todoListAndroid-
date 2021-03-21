@@ -17,13 +17,16 @@ class PerfilUsuarioViewModel(application: Application) : AndroidViewModel(applic
 
     val app = application
 
+    private val _facebookProvider = MutableLiveData<Boolean>()
+    var facebookProvider: LiveData<Boolean> = _facebookProvider
+
     private val _imagemPerfil = MutableLiveData<Uri>()
     var imagemPerfil: LiveData<Uri> = _imagemPerfil
 
     private val _usuario = MutableLiveData<Usuario?>()
     val usuario: LiveData<Usuario?> = _usuario
 
-    init {
+    fun receberUsuario() {
         UsuarioFirebaseDao
             .consultarUsuario()
             .addOnSuccessListener {
@@ -47,6 +50,11 @@ class PerfilUsuarioViewModel(application: Application) : AndroidViewModel(applic
             }
     }
 
+    fun verificarProvider() {
+        if(UsuarioFirebaseDao.firebaseAuth.currentUser.providerData[1].providerId == FacebookAuthProvider.PROVIDER_ID) {
+            _facebookProvider.value = true
+        }
+    }
 
     fun logout() {
         UsuarioFirebaseDao.logout()

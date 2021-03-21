@@ -28,6 +28,18 @@ class PerfilUsuarioFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, PerfilUsuarioViewModelFactory).get(PerfilUsuarioViewModel::class.java)
 
+        viewModel.receberUsuario()
+
+        var btnEditarPerfil = view.findViewById<Button>(R.id.btnEditarPerfil)
+
+        viewModel.verificarProvider()
+        viewModel.facebookProvider.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                btnEditarPerfil.isEnabled = false
+                btnEditarPerfil.visibility = Button.GONE
+            }
+        })
+
         viewModel.usuario.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 preencherInformacoes(it)
