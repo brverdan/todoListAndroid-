@@ -66,4 +66,13 @@ object UsuarioFirebaseDao {
     fun consultarImagem(uid: String, file: File): FileDownloadTask {
         return storage.child("${uid}.jpeg").getFile(file)
     }
+
+    fun atualizarNomeESenha(nome: String, senha: String, uid: String): Task<Void> {
+        firebaseAuth.currentUser.updatePassword(senha)
+        return collection.document(uid).update("nome", nome)
+    }
+
+    fun atualizarNome(nome: String, uid: String): Task<Void> {
+        return collection.document(uid).update("nome", nome)
+    }
 }

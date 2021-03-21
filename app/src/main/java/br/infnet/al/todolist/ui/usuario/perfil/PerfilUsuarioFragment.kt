@@ -56,6 +56,11 @@ class PerfilUsuarioFragment : Fragment() {
         btnLogout.setOnClickListener {
             viewModel.logout()
         }
+
+        var btnEditarPerfil = view.findViewById<Button>(R.id.btnEditarPerfil)
+        btnEditarPerfil.setOnClickListener {
+            findNavController().navigate(R.id.edicaoPerfilFragment)
+        }
     }
 
     private fun limparInformacoes() {
