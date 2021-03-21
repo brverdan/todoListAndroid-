@@ -46,6 +46,7 @@ class EdicaoPerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var imgFotoPerfilEditar = requireView().findViewById<ImageView>(R.id.imgFotoPerfilEditar)
         var edtInputNomeEditarPerfil = requireView().findViewById<TextInputEditText>(R.id.edtInputNomeEditarPerfil)
         var edtInputSenhaEditarPerfil = requireView().findViewById<TextInputEditText>(R.id.edtInputSenhaEditarPerfil)
 
@@ -53,16 +54,15 @@ class EdicaoPerfilFragment : Fragment() {
         btnEditarPerfilUsuario.setOnClickListener {
             var nome = edtInputNomeEditarPerfil.text.toString()
             var senha = edtInputSenhaEditarPerfil.text.toString()
-            if(!nome.isNullOrBlank()) {
+            if(!nome.isNullOrBlank() || !senha.isNullOrBlank() || imgFotoPerfilEditar != null) {
                 viewModel.editarPerfil(nome, senha)
             }
             else
             {
-                makeToast("Nome não pode ser vazio.")
+                makeToast("Algum campo precisa ser preenchido.")
             }
         }
 
-        var imgFotoPerfilEditar = view.findViewById<ImageView>(R.id.imgFotoPerfilEditar)
         imgFotoPerfilEditar.setOnClickListener {
             tirarFoto()
         }

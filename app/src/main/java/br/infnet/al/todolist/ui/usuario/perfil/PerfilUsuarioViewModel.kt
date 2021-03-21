@@ -12,6 +12,7 @@ import br.infnet.al.todolist.model.Usuario
 import com.google.firebase.auth.FacebookAuthCredential
 import com.google.firebase.auth.FacebookAuthProvider
 import java.io.File
+import kotlin.random.Random
 
 class PerfilUsuarioViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -34,7 +35,7 @@ class PerfilUsuarioViewModel(application: Application) : AndroidViewModel(applic
                 usuario!!.firebaseAuth = UsuarioFirebaseDao.firebaseAuth.currentUser
                 _usuario.value = usuario!!
                 if(UsuarioFirebaseDao.firebaseAuth.currentUser.providerData[1].providerId != FacebookAuthProvider.PROVIDER_ID) {
-                    val file = File(app.cacheDir, "userTemp.jpeg")
+                    val file = File(app.cacheDir, "${Random.nextInt(0, Int.MAX_VALUE)}.jpeg")
                     UsuarioFirebaseDao
                         .consultarImagem(usuario.uid!!, file)
                         .addOnSuccessListener {

@@ -75,4 +75,8 @@ object UsuarioFirebaseDao {
     fun atualizarNome(nome: String, uid: String): Task<Void> {
         return collection.document(uid).update("nome", nome)
     }
+
+    fun atualizarSenha(senha: String): Task<Void> {
+        return firebaseAuth.currentUser.updatePassword(senha)
+    }
 }

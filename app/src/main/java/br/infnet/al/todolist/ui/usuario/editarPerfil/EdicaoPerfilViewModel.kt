@@ -23,23 +23,18 @@ class EdicaoPerfilViewModel(application: Application) : AndroidViewModel(applica
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> = _message
 
-    val app = application
-
-    private val _imagemPerfil = MutableLiveData<Uri>()
-    var imagemPerfil: LiveData<Uri> = _imagemPerfil
-
-    private val _usuario = MutableLiveData<Usuario?>()
-    val usuario: LiveData<Usuario?> = _usuario
-
     init {
         _status.value = false
         _message.value = null
+    }
 
+    fun alterarImagemPerfil(img: Bitmap) {
+        fotoPerfil = img
     }
 
     fun editarPerfil(nome: String, senha: String) {
         var userId = UsuarioFirebaseDao.firebaseAuth.currentUser.uid
-        if (fotoPerfil != null && !senha.isNullOrBlank()) {
+        if (fotoPerfil != null && !senha.isNullOrBlank() && !nome.isNullOrBlank()) { //3 campos
             UsuarioFirebaseDao
                 .cadastrarImagemPerfil(fotoPerfil!!, userId)
                     .addOnSuccessListener {
@@ -50,45 +45,78 @@ class EdicaoPerfilViewModel(application: Application) : AndroidViewModel(applica
                     }
 
         }
-        else if(!senha.isNullOrBlank()) {
-            atualizarNomeESenha(nome, senha, userId)
+        else if (fotoPerfil != null && !senha.isNullOrBlank() ) { // apenas o campo de foto e senha
+            UsuarioFirebaseDao
+                .cadastrarImagemPerfil(fotoPerfil!!, userId)
+                .addOnSuccessListener {
+                    atualizarSenha(senha)
+                }
+                .addOnFailureListener {
+                    Log.i("FotoEditarPerfil", "${it.message}")
+                }
         }
-        else if(fotoPerfil != null) {
+        else if (fotoPerfil != null && !nome.isNullOrBlank()) { // apenas o campo de foto e nome
             UsuarioFirebaseDao
                 .cadastrarImagemPerfil(fotoPerfil!!, userId)
                 .addOnSuccessListener {
                     atualizarNome(nome, userId)
                 }
                 .addOnFailureListener {
-                    Log.i("FotoEditarPerfil", "${it.message}")
+                    Log.i("FotoEditarPerfilSenha", "${it.message}")
                 }
         }
-        else {
+        else if (!senha.isNullOrBlank() && !nome.isNullOrBlank()) { // apenas o campo de nome e senha
+            atualizarNomeESenha(nome, senha, userId)
+        }
+        else if (!nome.isNullOrBlank()) { // apenas o campo de nome
             atualizarNome(nome, userId)
+        }
+        else if (!senha.isNullOrBlank()) { // apenas o campo de senha
+            atualizarSenha(senha)
+        }
+        else { // apenas a foto
+            atualizarFotoPerfil(userId)
         }
     }
 
-    fun atualizarNomeESenha(nome: String, senha: String, userId: String) {
+    private fun atualizarSenha(senha: String) {
+        UsuarioFirebaseDao.atualizarSenha(senha)
+            .addOnSuccessListener {
+                _status.value = true
+            }
+            .addOnFailureListener {
+                Log.i("EditarPerfilSenha", "${it.message}")
+            }
+    }
+
+    private fun atualizarFotoPerfil(userId: String) {
+        UsuarioFirebaseDao
+            .cadastrarImagemPerfil(fotoPerfil!!, userId)
+            .addOnSuccessListener {
+                _status.value = true
+            }
+            .addOnFailureListener {
+                Log.i("FotoEditarPerfilSenha", "${it.message}")
+            }
+    }
+
+    private fun atualizarNomeESenha(nome: String, senha: String, userId: String) {
         UsuarioFirebaseDao.atualizarNomeESenha(nome, senha, userId)
             .addOnSuccessListener {
                 _status.value = true
             }
             .addOnFailureListener {
-                Log.i("EditarPerfil", "${it.message}")
+                Log.i("EditarPerfilNomeESenha", "${it.message}")
             }
     }
 
-    fun atualizarNome(nome: String, userId: String) {
+    private fun atualizarNome(nome: String, userId: String) {
         UsuarioFirebaseDao.atualizarNome(nome, userId)
             .addOnSuccessListener {
                 _status.value = true
             }
             .addOnFailureListener {
-                Log.i("EditarPerfil", "${it.message}")
+                Log.i("EditarPerfilNome", "${it.message}")
             }
-    }
-
-    fun alterarImagemPerfil(img: Bitmap) {
-        fotoPerfil = img
     }
 }
